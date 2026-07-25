@@ -202,7 +202,9 @@ curl -H "Authorization: Bearer $LINKBREEZE_API_KEY" \
 ```
 
 The v1 API supports listing, creating, updating, deleting, and reordering
-links. Its OpenAPI 3.1 document is available at `/api/v1/openapi.json`.
+links, reading and updating the public profile, and reading analytics for a
+selected date range. Its OpenAPI 3.1 document is available at
+`/api/v1/openapi.json`.
 
 Generating a replacement key immediately revokes the existing key. API calls
 are limited to 120 requests per minute per key.

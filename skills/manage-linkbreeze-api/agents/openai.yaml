@@ -1,0 +1,4 @@
+interface:
+  display_name: "Manage LinkBreeze API"
+  short_description: "Safely manage LinkBreeze links and profiles"
+  default_prompt: "Use $manage-linkbreeze-api to update my LinkBreeze links safely."

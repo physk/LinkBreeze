@@ -36,6 +36,13 @@ export function GET() {
       "/links/reorder": {
         put: { summary: "Reorder links", security, requestBody: { required: true, content: { "application/json": { schema: { type: "object", required: ["ids"], properties: { ids: { type: "array", items: { type: "integer" } } } } } } }, responses: { "200": { description: "Reordered links" }, "400": { description: "Invalid order" }, ...errors } },
       },
+      "/profile": {
+        get: { summary: "Read the public profile", security, responses: { "200": { description: "Profile" }, "404": { description: "Profile not found" }, ...errors } },
+        put: { summary: "Create or update the public profile", security, requestBody: { required: true, content: { "application/json": { schema: { type: "object", required: ["displayName"], properties: { displayName: { type: "string", maxLength: 80 }, bio: { type: "string", maxLength: 300 }, badgeText: { type: ["string", "null"], maxLength: 40 }, avatarUrl: { type: ["string", "null"] }, socialLinks: { type: "array", items: { type: "object", required: ["platform", "url"], properties: { platform: { type: "string" }, url: { type: "string" } } } } } } } } }, responses: { "200": { description: "Updated profile" }, "400": { description: "Invalid input" }, ...errors } },
+      },
+      "/analytics": {
+        get: { summary: "Read analytics", description: "Returns summary, daily series, top links, referrers, devices, and countries.", security, parameters: [{ name: "range", in: "query", schema: { type: "string", enum: ["7d", "30d", "90d", "all"], default: "7d" } }], responses: { "200": { description: "Analytics report" }, ...errors } },
+      },
     },
   });
 }

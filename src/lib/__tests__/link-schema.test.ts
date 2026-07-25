@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { linkInputSchema, linkPatchSchema, reorderInputSchema } from "@/lib/link-schema";
+import { profileInputSchema } from "@/lib/profile-schema";
 
 describe("public API schemas", () => {
   it("accepts a valid link and supplies defaults", () => {
@@ -14,5 +15,9 @@ describe("public API schemas", () => {
   });
   it("rejects empty reorder requests", () => {
     expect(reorderInputSchema.safeParse({ ids: [] }).success).toBe(false);
+  });
+  it("validates profile social links", () => {
+    expect(profileInputSchema.safeParse({ displayName: "Chris", socialLinks: [{ platform: "github", url: "https://github.com/physk" }] }).success).toBe(true);
+    expect(profileInputSchema.safeParse({ displayName: "Chris", socialLinks: [{ platform: "not-real", url: "https://example.com" }] }).success).toBe(false);
   });
 });

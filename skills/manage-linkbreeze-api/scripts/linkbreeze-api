@@ -1,0 +1,37 @@
+#!/bin/sh
+set -eu
+
+: "${LINKBREEZE_BASE_URL:?Set LINKBREEZE_BASE_URL}"
+: "${LINKBREEZE_API_KEY:?Set LINKBREEZE_API_KEY}"
+command -v curl >/dev/null
+
+api_url=${LINKBREEZE_BASE_URL%/}
+curl_config=$(mktemp)
+trap 'rm -f "$curl_config"' EXIT HUP INT TERM
+chmod 0600 "$curl_config"
+printf 'header = "Authorization: Bearer %s"\nheader = "Content-Type: application/json"\nfail-with-body\nsilent\nshow-error\n' "$LINKBREEZE_API_KEY" >"$curl_config"
+
+request() {
+  method=$1 path=$2
+  shift 2
+  curl --config "$curl_config" --request "$method" "${api_url}${path}" "$@"
+}
+
+command=${1:-}
+case "$command" in
+  health) curl --fail-with-body --silent --show-error "${api_url}/api/health" ;;
+  links-list) request GET /api/v1/links ;;
+  link-create) test $# -eq 2; request POST /api/v1/links --data-binary "@$2" ;;
+  link-update) test $# -eq 3; request PUT "/api/v1/links/$2" --data-binary "@$3" ;;
+  link-delete) test $# -eq 2; request DELETE "/api/v1/links/$2" ;;
+  links-reorder) test $# -eq 2; request PUT /api/v1/links/reorder --data-binary "@$2" ;;
+  profile-get) request GET /api/v1/profile ;;
+  profile-update) test $# -eq 2; request PUT /api/v1/profile --data-binary "@$2" ;;
+  analytics) request GET "/api/v1/analytics?range=${2:-7d}" ;;
+  openapi) curl --fail-with-body --silent --show-error "${api_url}/api/v1/openapi.json" ;;
+  *)
+    echo "usage: $0 {health|links-list|link-create FILE|link-update ID FILE|link-delete ID|links-reorder FILE|profile-get|profile-update FILE|analytics [RANGE]|openapi}" >&2
+    exit 2
+    ;;
+esac
+printf '\n'
