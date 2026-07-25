@@ -204,7 +204,7 @@ curl -H "Authorization: Bearer $LINKBREEZE_API_KEY" \
 The v1 API supports listing, creating, updating, deleting, and reordering
 links, reading and updating the public profile, and reading analytics for a
 selected date range. Interactive Swagger UI is available at `/api/docs`, and
-its OpenAPI 3.1 document is available at `/api/v1/openapi.json`.
+its OpenAPI 3.0 document is available at `/api/v1/openapi.json`.
 
 Generating a replacement key immediately revokes the existing key. API calls
 are limited to 120 requests per minute per key.

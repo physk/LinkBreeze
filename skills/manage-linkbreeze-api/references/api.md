@@ -1,6 +1,6 @@
 # LinkBreeze REST API v1
 
-Base path: `/api/v1`. Authenticate all resource requests with `Authorization: Bearer <key>`. Open interactive Swagger UI at `/api/docs` or retrieve the machine-readable OpenAPI 3.1 document from `/api/v1/openapi.json`.
+Base path: `/api/v1`. Authenticate all resource requests with `Authorization: Bearer <key>`. Open interactive Swagger UI at `/api/docs` or retrieve the machine-readable OpenAPI 3.0 document from `/api/v1/openapi.json`.
 
 ## Endpoints
 
