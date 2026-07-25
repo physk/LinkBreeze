@@ -191,6 +191,22 @@ No domain purchase or port forwarding needed:
 cloudflared tunnel --url http://localhost:3000
 ```
 
+## 🔌 REST API
+
+Generate an API key from **Settings → REST API**. The key is shown once; only
+its SHA-256 hash is stored. Send it as a Bearer token:
+
+```bash
+curl -H "Authorization: Bearer $LINKBREEZE_API_KEY" \
+  https://links.example.com/api/v1/links
+```
+
+The v1 API supports listing, creating, updating, deleting, and reordering
+links. Its OpenAPI 3.1 document is available at `/api/v1/openapi.json`.
+
+Generating a replacement key immediately revokes the existing key. API calls
+are limited to 120 requests per minute per key.
+
 ## 📸 Screenshots
 
 <details>

@@ -4,6 +4,8 @@ import { getSettings, getSetting, getAllThemes, getActiveTheme, getSubscriberCou
 import { SettingsForm } from "./settings-form";
 import { ChangePasswordForm } from "./change-password-form";
 import { DataManager } from "./data-manager";
+import { ApiKeyManager } from "./api-key-manager";
+import { hasApiKey } from "@/lib/api-key";
 import {
   Card,
   CardContent,
@@ -15,11 +17,12 @@ import {
 export const dynamic = "force-dynamic";
 
 export default async function SettingsPage() {
-  const [settings, themes, active, subscriberCount] = await Promise.all([
+  const [settings, themes, active, subscriberCount, apiKeyConfigured] = await Promise.all([
     getSettings(),
     getAllThemes(),
     getActiveTheme(),
     getSubscriberCount(),
+    hasApiKey(),
   ]);
   const retentionDays = await getSetting("analyticsRetentionDays");
 
@@ -87,6 +90,7 @@ export default async function SettingsPage() {
       </Card>
 
       <ChangePasswordForm />
+      <ApiKeyManager configured={apiKeyConfigured} />
       <DataManager retentionDays={retentionDays ?? ""} />
     </div>
   );
