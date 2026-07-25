@@ -25,6 +25,10 @@ skills/manage-linkbreeze-api/scripts/linkbreeze-api health
 skills/manage-linkbreeze-api/scripts/linkbreeze-api links-list
 ```
 
+Use `/api/docs` for interactive Swagger documentation when human inspection
+or manual request exploration is useful. Do not enable persistent browser
+authorization on shared devices.
+
 ## Apply changes safely
 
 1. Read the existing links and profile.
